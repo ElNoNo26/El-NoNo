@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title id="meta-title">Muebles de Pino</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&family=Playfair+Display:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --wood-light: #FDF9F3;
+            --wood-medium: #E6D5C3;
+            --wood-dark: #5D4037;
+            --accent: #7E8964;
+            --wa-color: #25D366;
+            --text-main: #2C2C2C;
+            --text-light: #6D6D6D;
+            --transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+        body { font-family: 'Inter', sans-serif; background-color: var(--wood-light); color: var(--text-main); line-height: 1.6; overflow-x: hidden; }
+        h1, h2, h3 { font-family: 'Playfair Display', serif; }
+
+        /* HEADER */
+        header { padding: 1rem 2rem; display: flex; justify-content: center; align-items: center; background: white; border-bottom: 1px solid var(--wood-medium); height: 100px; }
+        .logo-container img { max-height: 80px; width: auto; object-fit: contain; }
+        .logo-text { font-size: 1.5rem; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; color: var(--wood-dark); }
+
+        /* HERO (BANNER) - Reducido a 40vh */
+        .hero { 
+            height: 40vh; 
+            min-height: 300px;
+            background-size: cover; 
+            background-position: center; 
+            display: flex; 
+            align-items: center; 
+            justify-content: center; 
+            text-align: center; 
+            position: relative; 
+            color: white; 
+            background-color: #5D4037; /* Color fondo por si falla imagen */
+        }
+        .hero::after { content: ''; position: absolute; inset: 0; background: rgba(0,0,0,0.4); }
+        .hero-content { position: relative; z-index: 1; padding: 20px; }
+        .hero h1 { font-size: 3rem; margin-bottom: 0.5rem; text-shadow: 0 2px 10px rgba(0,0,0,0.3); }
+
+        /* CARRUSEL */
+        .featured-section { padding: 4rem 1rem; max-width: 1200px; margin: 0 auto; }
+        .carousel-container { overflow: hidden; position: relative; border-radius: 20px; box-shadow: 0 20px 40px rgba(0,0,0,0.05); background: #eee; }
+        .carousel-track { display: flex; transition: transform 0.8s cubic-bezier(0.45, 0, 0.55, 1); }
+        .carousel-slide { min-width: 100%; height: 500px; position: relative; cursor: pointer; }
+        .carousel-slide img { width: 100%; height: 100%; object-fit: cover; display: block; }
+        .carousel-overlay { position: absolute; bottom: 0; left: 0; right: 0; padding: 2rem; background: linear-gradient(transparent, rgba(0,0,0,0.8)); color: white; display: flex; flex-direction: column; justify-content: flex-end; align-items: flex-start; }
+        .carousel-overlay h3 { font-size: 1.8rem; margin-bottom: 5px; text-shadow: 0 2px 4px rgba(0,0,0,0.5); }
+        
+        /* Botón sutil "Ver detalles" */
+        .carousel-detail-btn { font-size: 0.8rem; font-weight: 400; border: 1px solid rgba(255,255,255,0.7); padding: 5px 15px; border-radius: 20px; background: rgba(0,0,0,0.2); backdrop-filter: blur(4px); transition: 0.3s; }
+
+        /* CATALOGO */
+        .catalog-container { max-width: 1200px; margin: 0 auto; padding: 2rem 1rem 6rem; }
+        .categories { display: flex; gap: 0.8rem; justify-content: center; margin-bottom: 3rem; flex-wrap: wrap; }
+        .cat-btn { padding: 0.8rem 1.8rem; border: 1px solid var(--wood-medium); background: white; border-radius: 50px; cursor: pointer; font-weight: 600; transition: var(--transition); font-size: 0.9rem; }
+        .cat-btn.active, .cat-btn:hover { background: var(--wood-dark); color: white; border-color: var(--wood-dark); transform: translateY(-2px); }
+
+        .products-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 2.5rem; }
+        .product-card { background: white; border-radius: 15px; overflow: hidden; transition: var(--transition); border: 1px solid rgba(0,0,0,0.03); cursor: pointer; display: flex; flex-direction: column; box-shadow: 0 4px 10px rgba(0,0,0,0.05); }
+        .product-card:hover { transform: translateY(-10px); box-shadow: 0 25px 50px rgba(0,0,0,0.1); }
+        .product-img { width: 100%; height: 320px; object-fit: cover; transition: transform 0.6s ease; }
+        .product-card:hover .product-img { transform: scale(1.05); }
+        .product-info { padding: 1.8rem; flex: 1; display: flex; flex-direction: column; }
+        .product-info h3 { margin-bottom: 0.5rem; font-size: 1.5rem; color: var(--wood-dark); }
+        .product-meta { color: var(--text-light); font-size: 0.85rem; margin-bottom: 1rem; text-transform: uppercase; letter-spacing: 1px; flex: 1; }
+        
+        /* Botón WhatsApp en Tarjeta */
+        .btn-wa-card {
+            background: var(--wa-color);
+            color: white; text-decoration: none; padding: 12px; border-radius: 10px; font-weight: 600;
+            display: flex; align-items: center; justify-content: center; gap: 8px; margin-top: auto;
+            transition: 0.2s; box-shadow: 0 4px 10px rgba(37, 211, 102, 0.2);
+        }
+        .btn-wa-card:hover { background: #1ebe57; transform: scale(1.02); }
+
+        /* POPUP */
+        .popup-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.85); z-index: 1000; display: none; align-items: center; justify-content: center; padding: 1rem; backdrop-filter: blur(8px); }
+        .popup-content { background: white; max-width: 1000px; width: 100%; border-radius: 25px; overflow: hidden; display: flex; position: relative; animation: slideUp 0.3s ease-out; }
+        @keyframes slideUp { from { transform: translateY(50px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
+        
+        .popup-close { position: absolute; top: 20px; right: 20px; background: white; border: none; width: 40px; height: 40px; border-radius: 50%; cursor: pointer; z-index: 10; font-size: 1.8rem; display: flex; align-items: center; justify-content: center; box-shadow: 0 5px 20px rgba(0,0,0,0.2); }
+        
+        .popup-left { flex: 1.2; height: 600px; background: #eee; }
+        .popup-left img { width: 100%; height: 100%; object-fit: cover; }
+        
+        .popup-right { flex: 1; padding: 3.5rem; display: flex; flex-direction: column; justify-content: center; }
+        
+        /* Estilos Orden Popup */
+        .popup-cat-badge {
+            display: inline-block; font-size: 0.85rem; color: #666; border: 1px solid #ddd;
+            padding: 4px 12px; border-radius: 50px; margin-bottom: 1.5rem; align-self: flex-start; background: #f9f9f9;
+        }
+        .popup-dimensions { font-weight: 600; color: var(--wood-dark); font-size: 1.1rem; margin-bottom: 1rem; display: flex; align-items: center; gap: 8px; }
+        .popup-description { color: var(--text-light); line-height: 1.7; margin-bottom: 2.5rem; font-size: 1rem; }
+        .popup-btn-wa { background: #25D366; color: white; padding: 1.2rem; text-align: center; border-radius: 15px; text-decoration: none; font-weight: 700; display: block; transition: 0.3s; }
+        .popup-btn-wa:hover { background: #1ebe57; }
+
+        .about-section { background: white; padding: 8rem 1rem; text-align: center; border-top: 1px solid var(--wood-medium); }
+        .about-content { max-width: 800px; margin: 0 auto; }
+        footer { background: var(--wood-dark); color: white; padding: 5rem 2rem; text-align: center; }
+        .footer-socials { display: flex; justify-content: center; gap: 2.5rem; margin: 2.5rem 0; }
+        .footer-socials a { color: white; text-decoration: none; font-weight: 500; opacity: 0.8; }
+        .btn-wa-footer { background: #25D366; color: white; padding: 1.2rem 2.5rem; border-radius: 50px; text-decoration: none; display: inline-flex; align-items: center; gap: 0.8rem; font-weight: 700; margin-top: 2rem; }
+
+        @media (max-width: 850px) {
+            .popup-content { flex-direction: column; max-height: 95vh; overflow-y: auto; }
+            .popup-left { height: 350px; }
+            .popup-right { padding: 2rem; }
+            .hero h1 { font-size: 2.5rem; }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="logo-container" id="header-logo-container"></div>
+    </header>
+
+    <section class="hero" id="hero-banner">
+        <div class="hero-content">
+            <h1 id="hero-title">...</h1>
+            <p id="hero-subtitle">...</p>
+        </div>
+    </section>
+
+    <section class="featured-section" id="featured-area">
+        <h2 style="text-align: center; margin-bottom: 3rem; font-size: 2.2rem;">Productos Destacados</h2>
+        <div class="carousel-container">
+            <div class="carousel-track" id="carousel-track"></div>
+        </div>
+    </section>
+
+    <section class="catalog-container">
+        <div class="categories" id="category-filters"></div>
+        <div class="products-grid" id="products-grid"></div>
+    </section>
+
+    <section class="about-section">
+        <div class="about-content">
+            <h2 id="about-title">Nuestra Historia</h2>
+            <p id="about-text" style="color: var(--text-light); font-size: 1.1rem;"></p>
+        </div>
+    </section>
+
+    <footer>
+        <h3 id="footer-brand" style="font-size: 2rem; margin-bottom: 1rem;">...</h3>
+        <div class="footer-socials" id="footer-socials"></div>
+        <p style="opacity: 0.6; font-size: 0.9rem;">© 2026. Todos los derechos reservados.</p>
+        <a href="#" class="btn-wa-footer" id="main-wa-btn">
+            Consultar por WhatsApp
+        </a>
+    </footer>
+
+    <!-- Popup -->
+    <div class="popup-overlay" id="popup">
+        <div class="popup-content" onclick="event.stopPropagation()">
+            <button class="popup-close" onclick="closePopup()">×</button>
+            <div class="popup-left">
+                <img id="pop-img" src="" alt="">
+            </div>
+            <div class="popup-right">
+                <!-- 1. Nombre -->
+                <h2 id="pop-title" style="margin-bottom: 0.5rem; color: var(--wood-dark);">Nombre</h2>
+                <!-- 2. Categoría -->
+                <div id="pop-cat" class="popup-cat-badge">Categoría</div>
+                <!-- 3. Medidas -->
+                <div class="popup-dimensions">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path><polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline><line x1="12" y1="22.08" x2="12" y2="12"></line></svg>
+                    Medidas: <span id="pop-dim" style="font-weight: 400; margin-left: 5px;"></span>
+                </div>
+                <!-- 4. Detalles -->
+                <div id="pop-details" class="popup-description"></div>
+                <!-- 5. Botón WA -->
+                <a href="#" id="pop-wa-btn" class="popup-btn-wa" target="_blank">Consultar disponibilidad</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- DATOS -->
+    <script id="site-data" type="application/json">
+    {
+        "config": {
+            "businessName": "Pino & Veta",
+            "logo": "",
+            "whatsapp": "5491100000000",
+            "heroImage": "https://images.unsplash.com/photo-1611486212335-9610f607411b?q=80&w=2070&auto=format&fit=crop",
+            "heroTitle": "Madera Noble",
+            "heroSubtitle": "Diseños exclusivos para tu hogar",
+            "aboutTitle": "Nuestra Esencia",
+            "aboutText": "En Pino & Veta, creemos que el hogar se construye con detalles."
+        },
+        "socials": [ {"name": "Instagram", "url": "#"}, {"name": "Facebook", "url": "#"} ],
+        "categories": ["Living", "Dormitorio", "Comedor", "Oficina"],
+        "products": [
+            {
+                "id": 1,
+                "name": "Mesa de Comedor Robusta",
+                "category": "Comedor",
+                "dimensions": "180x90cm",
+                "details": "Madera de pino de 2 pulgadas, acabado encerado natural.",
+                "image": "https://images.unsplash.com/photo-1577145900570-4c0536859786?q=80&w=1974&auto=format&fit=crop",
+                "featured": true
+            }
+        ]
+    }
+    </script>
+
+    <script>
+        let currentData = JSON.parse(document.getElementById('site-data').textContent);
+        
+        function init() {
+            const { config, categories, products, socials } = currentData;
+            
+            document.title = config.businessName;
+            
+            // Logo
+            const logoContainer = document.getElementById('header-logo-container');
+            if (config.logo && config.logo.trim() !== "") {
+                logoContainer.innerHTML = `<img src="${config.logo}" alt="${config.businessName}">`;
+            } else {
+                logoContainer.innerHTML = `<div class="logo-text">${config.businessName}</div>`;
+            }
+
+            document.getElementById('hero-title').textContent = config.heroTitle;
+            document.getElementById('hero-subtitle').textContent = config.heroSubtitle;
+            document.getElementById('hero-banner').style.backgroundImage = `url('${config.heroImage}')`;
+            document.getElementById('about-title').textContent = config.aboutTitle;
+            document.getElementById('about-text').textContent = config.aboutText;
+            document.getElementById('footer-brand').textContent = config.businessName;
+            document.getElementById('main-wa-btn').href = `https://wa.me/${config.whatsapp}?text=Hola! Quería consultar por los muebles.`;
+
+            // Categorias
+            const catFilters = document.getElementById('category-filters');
+            catFilters.innerHTML = `<button class="cat-btn active" onclick="filterCategory('todos')">Todos</button>`;
+            categories.forEach(cat => { catFilters.innerHTML += `<button class="cat-btn" onclick="filterCategory('${cat}')">${cat}</button>`; });
+
+            // Redes
+            const socialBox = document.getElementById('footer-socials');
+            socialBox.innerHTML = '';
+            socials.forEach(s => { socialBox.innerHTML += `<a href="${s.url}" target="_blank">${s.name}</a>`; });
+
+            renderProducts(products);
+            
+            const featured = products.filter(p => p.featured);
+            if(featured.length > 0) {
+                renderCarousel(featured);
+                startCarousel();
+            } else {
+                document.getElementById('featured-area').style.display = 'none';
+            }
+        }
+
+        function renderProducts(items) {
+            const grid = document.getElementById('products-grid');
+            grid.innerHTML = items.map(p => {
+                const waUrl = `https://wa.me/${currentData.config.whatsapp}?text=Hola! Me interesa: ${encodeURIComponent(p.name)}`;
+                return `
+                <div class="product-card" onclick="openPopup(${p.id})">
+                    <img src="${p.image}" class="product-img" loading="lazy">
+                    <div class="product-info">
+                        <p class="product-meta">${p.category}</p>
+                        <h3>${p.name}</h3>
+                        <p class="product-meta" style="letter-spacing:0">${p.dimensions}</p>
+                        <a href="${waUrl}" target="_blank" class="btn-wa-card" onclick="event.stopPropagation()">
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M12.031 6.172c-3.181 0-5.767 2.586-5.768 5.766-.001 1.298.38 2.27 1.019 3.287l-.582 2.128 2.182-.573c.978.58 1.911.928 3.145.929 3.178 0 5.767-2.587 5.768-5.766 0-3.18-2.587-5.771-5.764-5.771zm3.392 8.244c-.144.405-.837.774-1.17.824-.299.045-.677.063-1.092-.069-.252-.08-.575-.187-.988-.365-1.739-.751-2.874-2.503-2.961-2.617-.087-.114-.708-.941-.708-1.792 0-.85.445-1.27.604-1.441.159-.171.348-.215.463-.215.115 0 .231.001.332.006.112.005.234-.045.367.27.133.315.456 1.111.497 1.192.041.081.069.175.013.285-.056.115-.081.19-.162.285-.081.095-.173.213-.247.285-.082.08-.167.167-.071.331.095.162.424.7.912 1.135.628.561 1.157.735 1.32.816.162.081.257.068.353-.042.095-.11.41-.479.52-.643.11-.164.22-.137.369-.082.148.055.941.445 1.103.526.163.081.271.121.309.186.039.066.039.375-.104.78z"/></svg>
+                            Consultar Precio
+                        </a>
+                    </div>
+                </div>
+            `}).join('');
+        }
+
+        function renderCarousel(items) {
+            const track = document.getElementById('carousel-track');
+            track.innerHTML = items.map(p => `
+                <div class="carousel-slide" onclick="openPopup(${p.id})">
+                    <img src="${p.image}">
+                    <div class="carousel-overlay">
+                        <h3>${p.name}</h3>
+                        <span class="carousel-detail-btn">Ver detalles</span>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        let carouselIndex = 0;
+        let carouselInterval;
+        function startCarousel() {
+            const track = document.getElementById('carousel-track');
+            if (track.children.length <= 1) return;
+            if (carouselInterval) clearInterval(carouselInterval);
+            carouselInterval = setInterval(() => {
+                carouselIndex = (carouselIndex + 1) % track.children.length;
+                track.style.transform = `translateX(-${carouselIndex * 100}%)`;
+            }, 5000);
+        }
+
+        function filterCategory(cat) {
+            document.querySelectorAll('.cat-btn').forEach(b => b.classList.toggle('active', b.textContent === (cat === 'todos' ? 'Todos' : cat)));
+            renderProducts(cat === 'todos' ? currentData.products : currentData.products.filter(p => p.category === cat));
+        }
+
+        function openPopup(id) {
+            const p = currentData.products.find(x => x.id === id);
+            document.getElementById('pop-img').src = p.image;
+            document.getElementById('pop-title').textContent = p.name;
+            document.getElementById('pop-cat').textContent = p.category;
+            document.getElementById('pop-dim').textContent = p.dimensions;
+            document.getElementById('pop-details').textContent = p.details;
+            document.getElementById('pop-wa-btn').href = `https://wa.me/${currentData.config.whatsapp}?text=Hola! Me interesa: ${encodeURIComponent(p.name)}`;
+            
+            document.getElementById('popup').style.display = 'flex';
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closePopup() {
+            document.getElementById('popup').style.display = 'none';
+            document.body.style.overflow = 'auto';
+        }
+
+        window.onclick = e => { if (e.target.id === 'popup') closePopup(); }
+        window.onload = init;
+    </script>
+</body>
+</html>
