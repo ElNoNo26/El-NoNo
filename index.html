@@ -6,7 +6,7 @@
     <title id="meta-title">Muebles de Pino</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&family=Playfair+Display:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Playfair+Display:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
     <style>
         :root {
             --wood-light: #FDF9F3;
@@ -16,61 +16,51 @@
             --wa-color: #25D366;
             --text-main: #2C2C2C;
             --text-light: #6D6D6D;
-            --transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+            --transition: all 0.3s ease;
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
         body { font-family: 'Inter', sans-serif; background-color: var(--wood-light); color: var(--text-main); line-height: 1.6; overflow-x: hidden; }
         h1, h2, h3 { font-family: 'Playfair Display', serif; }
 
-        /* HEADER & LOGO (CORREGIDO) */
-        header { 
-            padding: 1.5rem 1rem; /* Más espacio arriba y abajo */
-            display: flex; 
-            justify-content: center; 
-            align-items: center; 
-            background: white; 
-            border-bottom: 1px solid var(--wood-medium); 
-            /* Quitamos la altura fija para que crezca con el logo */
-        }
-        
-        .logo-container img { 
-            max-height: 150px; /* Aumentado de 80px a 150px */
-            width: auto; 
-            max-width: 90vw; /* Evita que se salga en celulares muy chicos */
-            object-fit: contain; 
-            display: block;
-        }
-        
+        /* HEADER */
+        header { padding: 1.5rem 1rem; display: flex; justify-content: center; align-items: center; background: white; border-bottom: 1px solid var(--wood-medium); }
+        .logo-container img { max-height: 150px; width: auto; max-width: 90vw; object-fit: contain; display: block; }
         .logo-text { font-size: 2rem; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; color: var(--wood-dark); }
 
-        /* HERO BANNER */
+        /* HERO */
         .hero { 
-            height: 40vh; 
-            min-height: 300px;
-            background-size: cover; 
-            background-position: center; 
-            display: flex; 
-            align-items: center; 
-            justify-content: center; 
-            text-align: center; 
-            position: relative; 
-            color: white; 
-            background-color: #5D4037;
+            height: 40vh; min-height: 300px;
+            background-size: cover; background-position: center; 
+            display: flex; align-items: center; justify-content: center; text-align: center; 
+            position: relative; color: white; background-color: #5D4037;
         }
         .hero::after { content: ''; position: absolute; inset: 0; background: rgba(0,0,0,0.4); }
         .hero-content { position: relative; z-index: 1; padding: 20px; }
         .hero h1 { font-size: 3rem; margin-bottom: 0.5rem; text-shadow: 0 2px 10px rgba(0,0,0,0.3); }
 
-        /* CARRUSEL */
+        /* CARRUSEL DESTACADOS */
         .featured-section { padding: 4rem 1rem; max-width: 1200px; margin: 0 auto; }
         .carousel-container { overflow: hidden; position: relative; border-radius: 20px; box-shadow: 0 20px 40px rgba(0,0,0,0.05); background: #eee; }
         .carousel-track { display: flex; transition: transform 0.8s cubic-bezier(0.45, 0, 0.55, 1); }
-        .carousel-slide { min-width: 100%; height: 500px; position: relative; cursor: pointer; }
-        .carousel-slide img { width: 100%; height: 100%; object-fit: cover; display: block; }
-        .carousel-overlay { position: absolute; bottom: 0; left: 0; right: 0; padding: 2rem; background: linear-gradient(transparent, rgba(0,0,0,0.8)); color: white; display: flex; flex-direction: column; justify-content: flex-end; align-items: flex-start; }
+        .carousel-slide { min-width: 100%; height: 500px; position: relative; } /* Quitamos cursor pointer general */
+        
+        /* Imagen del carrusel: Abre Popup Foto */
+        .carousel-img { width: 100%; height: 100%; object-fit: cover; display: block; cursor: pointer; } 
+        
+        .carousel-overlay { position: absolute; bottom: 0; left: 0; right: 0; padding: 2rem; background: linear-gradient(transparent, rgba(0,0,0,0.8)); color: white; display: flex; flex-direction: column; justify-content: flex-end; align-items: flex-start; pointer-events: none; }
         .carousel-overlay h3 { font-size: 1.8rem; margin-bottom: 5px; text-shadow: 0 2px 4px rgba(0,0,0,0.5); }
-        .carousel-detail-btn { font-size: 0.8rem; font-weight: 400; border: 1px solid rgba(255,255,255,0.7); padding: 5px 15px; border-radius: 20px; background: rgba(0,0,0,0.2); backdrop-filter: blur(4px); transition: 0.3s; }
+        
+        /* Botón Ver Detalles: Abre Popup Completo */
+        .carousel-detail-btn { 
+            font-size: 0.85rem; font-weight: 500; 
+            border: 1px solid rgba(255,255,255,0.8); 
+            padding: 6px 18px; border-radius: 50px; 
+            background: rgba(0,0,0,0.3); backdrop-filter: blur(4px); 
+            pointer-events: auto; cursor: pointer; color: white;
+            transition: 0.3s;
+        }
+        .carousel-detail-btn:hover { background: white; color: black; }
 
         /* CATALOGO */
         .catalog-container { max-width: 1200px; margin: 0 auto; padding: 2rem 1rem 6rem; }
@@ -79,65 +69,88 @@
         .cat-btn.active, .cat-btn:hover { background: var(--wood-dark); color: white; border-color: var(--wood-dark); transform: translateY(-2px); }
 
         .products-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 2.5rem; }
-        .product-card { background: white; border-radius: 15px; overflow: hidden; transition: var(--transition); border: 1px solid rgba(0,0,0,0.03); cursor: pointer; display: flex; flex-direction: column; box-shadow: 0 4px 10px rgba(0,0,0,0.05); }
-        .product-card:hover { transform: translateY(-10px); box-shadow: 0 25px 50px rgba(0,0,0,0.1); }
-        .product-img { width: 100%; height: 320px; object-fit: cover; transition: transform 0.6s ease; }
-        .product-card:hover .product-img { transform: scale(1.05); }
-        .product-info { padding: 1.8rem; flex: 1; display: flex; flex-direction: column; }
-        .product-info h3 { margin-bottom: 0.5rem; font-size: 1.5rem; color: var(--wood-dark); }
-        .product-meta { color: var(--text-light); font-size: 0.85rem; margin-bottom: 1rem; text-transform: uppercase; letter-spacing: 1px; flex: 1; }
         
+        /* TARJETA PRODUCTO */
+        .product-card { 
+            background: white; border-radius: 15px; overflow: hidden; 
+            transition: var(--transition); border: 1px solid rgba(0,0,0,0.03); 
+            display: flex; flex-direction: column; 
+            box-shadow: 0 4px 10px rgba(0,0,0,0.05); 
+        }
+        .product-card:hover { transform: translateY(-5px); box-shadow: 0 15px 30px rgba(0,0,0,0.1); }
+        
+        .product-img-container { position: relative; width: 100%; height: 320px; overflow: hidden; cursor: pointer; }
+        .product-img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.6s ease; }
+        .product-card:hover .product-img { transform: scale(1.05); }
+        
+        .zoom-icon {
+            position: absolute; top: 10px; right: 10px; background: rgba(255,255,255,0.8);
+            width: 35px; height: 35px; border-radius: 50%; display: flex; align-items: center; justify-content: center;
+            opacity: 0; transition: 0.3s; pointer-events: none;
+        }
+        .product-img-container:hover .zoom-icon { opacity: 1; }
+
+        .product-info { padding: 1.5rem; flex: 1; display: flex; flex-direction: column; gap: 0.5rem; }
+        .p-category { display: inline-block; font-size: 0.75rem; color: #888; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 0;}
+        .p-title { margin: 0; font-size: 1.4rem; color: var(--wood-dark); line-height: 1.2; }
+        .p-dims { font-size: 0.9rem; color: var(--text-main); font-weight: 500; display: flex; align-items: center; gap: 5px; }
+        .p-details { font-size: 0.9rem; color: var(--text-light); display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; margin-bottom: 1rem; flex: 1; }
+        
+        /* BOTÓN CONSULTAR (Verde + Icono WA) */
         .btn-wa-card {
-            background: var(--wa-color);
-            color: white; text-decoration: none; padding: 12px; border-radius: 10px; font-weight: 600;
+            background: var(--wa-color); color: white; text-decoration: none; padding: 12px; border-radius: 10px; font-weight: 600;
             display: flex; align-items: center; justify-content: center; gap: 8px; margin-top: auto;
             transition: 0.2s; box-shadow: 0 4px 10px rgba(37, 211, 102, 0.2);
         }
         .btn-wa-card:hover { background: #1ebe57; transform: scale(1.02); }
 
-        /* POPUP */
-        .popup-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.85); z-index: 1000; display: none; align-items: center; justify-content: center; padding: 1rem; backdrop-filter: blur(8px); }
-        .popup-content { background: white; max-width: 1000px; width: 100%; border-radius: 25px; overflow: hidden; display: flex; position: relative; animation: slideUp 0.3s ease-out; }
+        /* 1. POPUP IMAGEN (Galería) */
+        .popup-img-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.95); z-index: 1000; display: none; align-items: center; justify-content: center; padding: 0; backdrop-filter: blur(5px); }
+        .popup-img-content { width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; position: relative; }
+        .popup-img-close { position: absolute; top: 20px; right: 20px; background: rgba(255,255,255,0.2); border: none; width: 50px; height: 50px; border-radius: 50%; cursor: pointer; z-index: 20; color: white; font-size: 2rem; display: flex; align-items: center; justify-content: center; transition: 0.3s; }
+        .popup-img-close:hover { background: rgba(255,255,255,0.4); }
+        .popup-img-tag { max-width: 95vw; max-height: 95vh; object-fit: contain; box-shadow: 0 0 50px rgba(0,0,0,0.5); border-radius: 5px; }
+
+        /* 2. POPUP DETALLE COMPLETO */
+        .popup-det-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.85); z-index: 1000; display: none; align-items: center; justify-content: center; padding: 1rem; backdrop-filter: blur(8px); }
+        .popup-det-content { background: white; max-width: 1000px; width: 100%; border-radius: 25px; overflow: hidden; display: flex; position: relative; animation: slideUp 0.3s ease-out; }
         @keyframes slideUp { from { transform: translateY(50px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
+        .popup-det-close { position: absolute; top: 20px; right: 20px; background: white; border: none; width: 40px; height: 40px; border-radius: 50%; cursor: pointer; z-index: 10; font-size: 1.8rem; display: flex; align-items: center; justify-content: center; box-shadow: 0 5px 20px rgba(0,0,0,0.2); }
+        .popup-det-left { flex: 1.2; height: 600px; background: #eee; }
+        .popup-det-left img { width: 100%; height: 100%; object-fit: cover; }
+        .popup-det-right { flex: 1; padding: 3.5rem; display: flex; flex-direction: column; justify-content: center; }
         
-        .popup-close { position: absolute; top: 20px; right: 20px; background: white; border: none; width: 40px; height: 40px; border-radius: 50%; cursor: pointer; z-index: 10; font-size: 1.8rem; display: flex; align-items: center; justify-content: center; box-shadow: 0 5px 20px rgba(0,0,0,0.2); }
+        .popup-det-cat { display: inline-block; font-size: 0.85rem; color: #666; border: 1px solid #ddd; padding: 4px 12px; border-radius: 50px; margin-bottom: 1.5rem; align-self: flex-start; background: #f9f9f9; }
+        .popup-det-dims { font-weight: 600; color: var(--wood-dark); font-size: 1.1rem; margin-bottom: 1rem; display: flex; align-items: center; gap: 8px; }
+        .popup-det-desc { color: var(--text-light); line-height: 1.7; margin-bottom: 2.5rem; font-size: 1rem; }
         
-        .popup-left { flex: 1.2; height: 600px; background: #eee; }
-        .popup-left img { width: 100%; height: 100%; object-fit: cover; }
-        
-        .popup-right { flex: 1; padding: 3.5rem; display: flex; flex-direction: column; justify-content: center; }
-        
-        .popup-cat-badge {
-            display: inline-block; font-size: 0.85rem; color: #666; border: 1px solid #ddd;
-            padding: 4px 12px; border-radius: 50px; margin-bottom: 1.5rem; align-self: flex-start; background: #f9f9f9;
+        .popup-det-btn { 
+            background: #25D366; color: white; padding: 1.2rem; 
+            text-align: center; border-radius: 15px; text-decoration: none; 
+            font-weight: 700; display: flex; align-items: center; 
+            justify-content: center; gap: 10px; transition: 0.3s; 
         }
-        .popup-dimensions { font-weight: 600; color: var(--wood-dark); font-size: 1.1rem; margin-bottom: 1rem; display: flex; align-items: center; gap: 8px; }
-        .popup-description { color: var(--text-light); line-height: 1.7; margin-bottom: 2.5rem; font-size: 1rem; }
-        .popup-btn-wa { background: #25D366; color: white; padding: 1.2rem; text-align: center; border-radius: 15px; text-decoration: none; font-weight: 700; display: block; transition: 0.3s; }
-        .popup-btn-wa:hover { background: #1ebe57; }
+        .popup-det-btn:hover { background: #1ebe57; }
 
         .about-section { background: white; padding: 8rem 1rem; text-align: center; border-top: 1px solid var(--wood-medium); }
         .about-content { max-width: 800px; margin: 0 auto; }
         footer { background: var(--wood-dark); color: white; padding: 5rem 2rem; text-align: center; }
-        .footer-socials { display: flex; justify-content: center; gap: 2.5rem; margin: 2.5rem 0; }
-        .footer-socials a { color: white; text-decoration: none; font-weight: 500; opacity: 0.8; }
+        .footer-socials { display: flex; justify-content: center; gap: 2rem; margin: 2.5rem 0; }
+        .social-icon-link { color: white; text-decoration: none; transition: transform 0.3s ease; display: inline-block; }
+        .social-icon-link:hover { transform: scale(1.2); color: var(--wood-medium); }
+        .social-icon-link svg { width: 32px; height: 32px; fill: currentColor; }
         .btn-wa-footer { background: #25D366; color: white; padding: 1.2rem 2.5rem; border-radius: 50px; text-decoration: none; display: inline-flex; align-items: center; gap: 0.8rem; font-weight: 700; margin-top: 2rem; }
 
         @media (max-width: 850px) {
-            .popup-content { flex-direction: column; max-height: 95vh; overflow-y: auto; }
-            .popup-left { height: 350px; }
-            .popup-right { padding: 2rem; }
-            .hero h1 { font-size: 2.5rem; }
-            /* Logo en móvil un poco mas chico pero grande aún */
-            .logo-container img { max-height: 120px; }
+            .popup-det-content { flex-direction: column; max-height: 95vh; overflow-y: auto; }
+            .popup-det-left { height: 350px; }
+            .popup-det-right { padding: 2rem; }
         }
     </style>
 </head>
 <body>
 
-    <header>
-        <div class="logo-container" id="header-logo-container"></div>
-    </header>
+    <header><div class="logo-container" id="header-logo-container"></div></header>
 
     <section class="hero" id="hero-banner">
         <div class="hero-content">
@@ -148,9 +161,7 @@
 
     <section class="featured-section" id="featured-area">
         <h2 style="text-align: center; margin-bottom: 3rem; font-size: 2.2rem;">Productos Destacados</h2>
-        <div class="carousel-container">
-            <div class="carousel-track" id="carousel-track"></div>
-        </div>
+        <div class="carousel-container"><div class="carousel-track" id="carousel-track"></div></div>
     </section>
 
     <section class="catalog-container">
@@ -161,47 +172,54 @@
     <section class="about-section">
         <div class="about-content">
             <h2 id="about-title">Nuestra Historia</h2>
-            <p id="about-text" style="color: var(--text-light); font-size: 1.1rem;"></p>
+            <p id="about-text"></p>
         </div>
     </section>
 
     <footer>
-        <h3 id="footer-brand" style="font-size: 2rem; margin-bottom: 1rem;">...</h3>
+        <h3 id="footer-brand">...</h3>
         <div class="footer-socials" id="footer-socials"></div>
         <p style="opacity: 0.6; font-size: 0.9rem;">© 2026. Todos los derechos reservados.</p>
-        <a href="#" class="btn-wa-footer" id="main-wa-btn">
-            Consultar por WhatsApp
-        </a>
+        <a href="#" class="btn-wa-footer" id="main-wa-btn">Consultar por WhatsApp</a>
     </footer>
 
-    <!-- Popup -->
-    <div class="popup-overlay" id="popup">
-        <div class="popup-content" onclick="event.stopPropagation()">
-            <button class="popup-close" onclick="closePopup()">×</button>
-            <div class="popup-left">
-                <img id="pop-img" src="" alt="">
-            </div>
-            <div class="popup-right">
-                <h2 id="pop-title" style="margin-bottom: 0.5rem; color: var(--wood-dark);"></h2>
-                <div id="pop-cat" class="popup-cat-badge"></div>
-                <div class="popup-dimensions">
+    <!-- 1. POPUP SOLO IMAGEN -->
+    <div class="popup-img-overlay" id="popup-img" onclick="closeImgPopup()">
+        <button class="popup-img-close" onclick="closeImgPopup()">×</button>
+        <div class="popup-img-content">
+            <img id="pop-img-src" class="popup-img-tag" src="" alt="Mueble">
+        </div>
+    </div>
+
+    <!-- 2. POPUP DETALLE COMPLETO -->
+    <div class="popup-det-overlay" id="popup-det">
+        <div class="popup-det-content" onclick="event.stopPropagation()">
+            <button class="popup-det-close" onclick="closeDetPopup()">×</button>
+            <div class="popup-det-left"><img id="pop-det-img" src="" alt=""></div>
+            <div class="popup-det-right">
+                <h2 id="pop-det-title" style="margin-bottom: 0.5rem; color: var(--wood-dark);"></h2>
+                <div id="pop-det-cat" class="popup-det-cat"></div>
+                <div class="popup-det-dims">
                     <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path><polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline><line x1="12" y1="22.08" x2="12" y2="12"></line></svg>
-                    Medidas: <span id="pop-dim" style="font-weight: 400; margin-left: 5px;"></span>
+                    Medidas: <span id="pop-det-dim" style="font-weight: 400; margin-left: 5px;"></span>
                 </div>
-                <div id="pop-details" class="popup-description"></div>
-                <a href="#" id="pop-wa-btn" class="popup-btn-wa" target="_blank">Consultar disponibilidad</a>
+                <div id="pop-det-desc" class="popup-det-desc"></div>
+                <a href="#" id="pop-det-wa" class="popup-det-btn" target="_blank">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M12.031 6.172c-3.181 0-5.767 2.586-5.768 5.766-.001 1.298.38 2.27 1.019 3.287l-.582 2.128 2.182-.573c.978.58 1.911.928 3.145.929 3.178 0 5.767-2.587 5.768-5.766 0-3.18-2.587-5.771-5.764-5.771zm3.392 8.244c-.144.405-.837.774-1.17.824-.299.045-.677.063-1.092-.069-.252-.08-.575-.187-.988-.365-1.739-.751-2.874-2.503-2.961-2.617-.087-.114-.708-.941-.708-1.792 0-.85.445-1.27.604-1.441.159-.171.348-.215.463-.215.115 0 .231.001.332.006.112.005.234-.045.367.27.133.315.456 1.111.497 1.192.041.081.069.175.013.285-.056.115-.081.19-.162.285-.081.095-.173.213-.247.285-.082.08-.167.167-.071.331.095.162.424.7.912 1.135.628.561 1.157.735 1.32.816.162.081.257.068.353-.042.095-.11.41-.479.52-.643.11-.164.22-.137.369-.082.148.055.941.445 1.103.526.163.081.271.121.309.186.039.066.039.375-.104.78z"/></svg>
+                    Consultar
+                </a>
             </div>
         </div>
     </div>
 
-    <!-- DB INTERNA -->
+    <!-- DATOS -->
     <script id="site-data" type="application/json">
 {
     "config": {
         "businessName": "Pino & Veta",
-        "logo": "https://raw.githubusercontent.com/ElNoNo26/El-NoNo/refs/heads/main/Logo.png",
+        "logo": "https://raw.githubusercontent.com/ElNoNo26/El-NoNo-page/refs/heads/main/Logo.png",
         "whatsapp": "5491100000000",
-        "heroImage": "https://images.unsplash.com/photo-1611486212335-9610f607411b?q=80&w=2070&auto=format&fit=crop",
+        "heroImage": "https://raw.githubusercontent.com/ElNoNo26/El-NoNo-page/refs/heads/main/Logo.png",
         "heroTitle": "Madera Noble",
         "heroSubtitle": "Diseños exclusivos para tu hogar",
         "aboutTitle": "Nuestra Esencia",
@@ -226,11 +244,29 @@
     "products": [
         {
             "id": 1,
-            "name": "Mesa de Comedor Robusta",
+            "name": "Mesa ",
             "category": "Comedor",
             "dimensions": "180x90cm",
+            "image": "https://raw.githubusercontent.com/ElNoNo26/El-NoNo-page/refs/heads/main/Logo.png",
             "details": "Madera de pino de 2 pulgadas, acabado encerado natural.",
-            "image": "https://images.unsplash.com/photo-1577145900570-4c0536859786?q=80&w=1974&auto=format&fit=crop",
+            "featured": true
+        },
+        {
+            "id": 1769553847251,
+            "name": "Puerta ",
+            "category": "Comedor",
+            "dimensions": "30x68",
+            "image": "https://raw.githubusercontent.com/ElNoNo26/El-NoNo-page/refs/heads/main/Logo.png",
+            "details": "",
+            "featured": false
+        },
+        {
+            "id": 1769553863501,
+            "name": "Silla",
+            "category": "Dormitorio",
+            "dimensions": "",
+            "image": "https://raw.githubusercontent.com/ElNoNo26/El-NoNo-page/refs/heads/main/Logo.png",
+            "details": "",
             "featured": true
         }
     ]
@@ -240,11 +276,16 @@
     <script>
         let currentData = JSON.parse(document.getElementById('site-data').textContent);
         
+        const icons = {
+            instagram: '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>',
+            facebook: '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9 8h-3v4h3v12h5v-12h3.642l.358-4h-4v-1.667c0-.955.192-1.333 1.115-1.333h2.885v-5h-3.808c-3.596 0-5.192 1.583-5.192 4.615v3.385z"/></svg>',
+            default: '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 0c-6.627 0-12 5.373-12 12s5.373 12 12 12 12-5.373 12-12-5.373-12-12-12zm-2 16h-2v-6h2v6zm-1-6.891c-.607 0-1.1-.496-1.1-1.109 0-.612.492-1.109 1.1-1.109s1.1.497 1.1 1.109c0 .613-.493 1.109-1.1 1.109zm8 6.891h-1.998v-2.861c0-1.881-2.002-1.722-2.002 0v2.861h-2v-6h2v1.093c.872-1.616 4-1.736 4 1.548v3.359z"/></svg>' 
+        };
+
         function init() {
             const { config, categories, products, socials } = currentData;
             document.title = config.businessName;
             
-            // LOGO LOGIC - SIZE ADJUSTED VIA CSS
             const logoContainer = document.getElementById('header-logo-container');
             if (config.logo && config.logo.trim() !== "") {
                 logoContainer.innerHTML = `<img src="${config.logo}" alt="${config.businessName}">`;
@@ -266,7 +307,13 @@
 
             const socialBox = document.getElementById('footer-socials');
             socialBox.innerHTML = '';
-            socials.forEach(s => { socialBox.innerHTML += `<a href="${s.url}" target="_blank">${s.name}</a>`; });
+            socials.forEach(s => {
+                let iconHtml = icons.default;
+                const nameLower = s.name.toLowerCase();
+                if(nameLower.includes('instagram')) iconHtml = icons.instagram;
+                else if(nameLower.includes('facebook')) iconHtml = icons.facebook;
+                socialBox.innerHTML += `<a href="${s.url}" target="_blank" class="social-icon-link" aria-label="${s.name}">${iconHtml}</a>`;
+            });
 
             renderProducts(products);
             const featured = products.filter(p => p.featured);
@@ -283,70 +330,98 @@
             grid.innerHTML = items.map(p => {
                 const waUrl = `https://wa.me/${currentData.config.whatsapp}?text=Hola! Me interesa: ${encodeURIComponent(p.name)}`;
                 return `
-                <div class="product-card" onclick="openPopup(${p.id})">
-                    <img src="${p.image}" class="product-img" loading="lazy">
+                <div class="product-card">
+                    <div class="product-img-container" onclick="openImgPopup(${p.id})">
+                        <img src="${p.image}" class="product-img" loading="lazy">
+                        <div class="zoom-icon">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#333" stroke-width="2"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line><line x1="11" y1="8" x2="11" y2="14"></line><line x1="8" y1="11" x2="14" y2="11"></line></svg>
+                        </div>
+                    </div>
                     <div class="product-info">
-                        <p class="product-meta">${p.category}</p>
-                        <h3>${p.name}</h3>
-                        <p class="product-meta" style="letter-spacing:0">${p.dimensions}</p>
-                        <a href="${waUrl}" target="_blank" class="btn-wa-card" onclick="event.stopPropagation()">
+                        <p class="p-category">${p.category}</p>
+                        <h3 class="p-title">${p.name}</h3>
+                        <p class="p-dims">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path></svg>
+                            ${p.dimensions}
+                        </p>
+                        <p class="p-details">${p.details}</p>
+                        <a href="${waUrl}" target="_blank" class="btn-wa-card">
                             <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M12.031 6.172c-3.181 0-5.767 2.586-5.768 5.766-.001 1.298.38 2.27 1.019 3.287l-.582 2.128 2.182-.573c.978.58 1.911.928 3.145.929 3.178 0 5.767-2.587 5.768-5.766 0-3.18-2.587-5.771-5.764-5.771zm3.392 8.244c-.144.405-.837.774-1.17.824-.299.045-.677.063-1.092-.069-.252-.08-.575-.187-.988-.365-1.739-.751-2.874-2.503-2.961-2.617-.087-.114-.708-.941-.708-1.792 0-.85.445-1.27.604-1.441.159-.171.348-.215.463-.215.115 0 .231.001.332.006.112.005.234-.045.367.27.133.315.456 1.111.497 1.192.041.081.069.175.013.285-.056.115-.081.19-.162.285-.081.095-.173.213-.247.285-.082.08-.167.167-.071.331.095.162.424.7.912 1.135.628.561 1.157.735 1.32.816.162.081.257.068.353-.042.095-.11.41-.479.52-.643.11-.164.22-.137.369-.082.148.055.941.445 1.103.526.163.081.271.121.309.186.039.066.039.375-.104.78z"/></svg>
-                            Consultar Precio
+                            Consultar
                         </a>
                     </div>
                 </div>
             `}).join('');
-        }
+    }
 
-        function renderCarousel(items) {
-            const track = document.getElementById('carousel-track');
-            track.innerHTML = items.map(p => `
-                <div class="carousel-slide" onclick="openPopup(${p.id})">
-                    <img src="${p.image}">
-                    <div class="carousel-overlay">
-                        <h3>${p.name}</h3>
-                        <span class="carousel-detail-btn">Ver detalles</span>
-                    </div>
+    function renderCarousel(items) {
+        const track = document.getElementById('carousel-track');
+        track.innerHTML = items.map(p => `
+            <div class="carousel-slide">
+                <img src="${p.image}" class="carousel-img" onclick="openImgPopup(${p.id})">
+                <div class="carousel-overlay">
+                    <h3>${p.name}</h3>
+                    <button class="carousel-detail-btn" onclick="openDetPopup(${p.id})">Ver detalles</button>
                 </div>
-            `).join('');
-        }
+            </div>
+        `).join('');
+    }
 
-        let carouselIndex = 0;
-        let carouselInterval;
-        function startCarousel() {
-            const track = document.getElementById('carousel-track');
-            if (track.children.length <= 1) return;
-            if (carouselInterval) clearInterval(carouselInterval);
-            carouselInterval = setInterval(() => {
-                carouselIndex = (carouselIndex + 1) % track.children.length;
-                track.style.transform = `translateX(-${carouselIndex * 100}%)`;
-            }, 5000);
-        }
+    let carouselIndex = 0;
+    let carouselInterval;
+    function startCarousel() {
+        const track = document.getElementById('carousel-track');
+        if (track.children.length <= 1) return;
+        if (carouselInterval) clearInterval(carouselInterval);
+        carouselInterval = setInterval(() => {
+            carouselIndex = (carouselIndex + 1) % track.children.length;
+            track.style.transform = `translateX(-${carouselIndex * 100}%)`;
+        }, 5000);
+    }
 
-        function filterCategory(cat) {
-            document.querySelectorAll('.cat-btn').forEach(b => b.classList.toggle('active', b.textContent === (cat === 'todos' ? 'Todos' : cat)));
-            renderProducts(cat === 'todos' ? currentData.products : currentData.products.filter(p => p.category === cat));
-        }
+    function filterCategory(cat) {
+        document.querySelectorAll('.cat-btn').forEach(b => b.classList.toggle('active', b.textContent === (cat === 'todos' ? 'Todos' : cat)));
+        renderProducts(cat === 'todos' ? currentData.products : currentData.products.filter(p => p.category === cat));
+    }
 
-        function openPopup(id) {
-            const p = currentData.products.find(x => x.id === id);
-            document.getElementById('pop-img').src = p.image;
-            document.getElementById('pop-title').textContent = p.name;
-            document.getElementById('pop-cat').textContent = p.category;
-            document.getElementById('pop-dim').textContent = p.dimensions;
-            document.getElementById('pop-details').textContent = p.details;
-            document.getElementById('pop-wa-btn').href = `https://wa.me/${currentData.config.whatsapp}?text=Hola! Me interesa: ${encodeURIComponent(p.name)}`;
-            document.getElementById('popup').style.display = 'flex';
-            document.body.style.overflow = 'hidden';
-        }
+    // 1. ABRIR SOLO IMAGEN (Catálogo y Click en Foto Carrusel)
+    function openImgPopup(id) {
+        const p = currentData.products.find(x => x.id === id);
+        document.getElementById('pop-img-src').src = p.image;
+        document.getElementById('popup-img').style.display = 'flex';
+        document.body.style.overflow = 'hidden';
+    }
+    
+    function closeImgPopup() {
+        document.getElementById('popup-img').style.display = 'none';
+        document.body.style.overflow = 'auto';
+    }
 
-        function closePopup() {
-            document.getElementById('popup').style.display = 'none';
-            document.body.style.overflow = 'auto';
-        }
+    // 2. ABRIR DETALLE COMPLETO (Solo Botón Carrusel)
+    function openDetPopup(id) {
+        const p = currentData.products.find(x => x.id === id);
+        document.getElementById('pop-det-img').src = p.image;
+        document.getElementById('pop-det-title').textContent = p.name;
+        document.getElementById('pop-det-cat').textContent = p.category;
+        document.getElementById('pop-det-dim').textContent = p.dimensions;
+        document.getElementById('pop-det-desc').textContent = p.details;
+        document.getElementById('pop-det-wa').href = `https://wa.me/${currentData.config.whatsapp}?text=Hola! Me interesa: ${encodeURIComponent(p.name)}`;
+        
+        document.getElementById('popup-det').style.display = 'flex';
+        document.body.style.overflow = 'hidden';
+    }
 
-        window.onclick = e => { if (e.target.id === 'popup') closePopup(); }
-        window.onload = init;
+    function closeDetPopup() {
+        document.getElementById('popup-det').style.display = 'none';
+        document.body.style.overflow = 'auto';
+    }
+
+    window.onclick = e => { 
+        if (e.target.id === 'popup-det') closeDetPopup(); 
+        if (e.target.id === 'popup-img') closeImgPopup();
+    }
+    
+    window.onload = init;
     </script>
 </body>
 </html>
