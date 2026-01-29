@@ -203,20 +203,11 @@
         },
         {
             "id": 2,
-            "name": "Silla Vestida Premium",
-            "category": "Sillas",
+            "name": "Organizador",
+            "category": "Organizadores",
             "dims": "Standard",
-            "desc": "Silla de pino reforzada, excelente terminación.",
-            "img": "https://images.unsplash.com/photo-1598300042247-d088f8ab3a91?q=80&w=800&auto=format&fit=crop",
-            "featured": true
-        },
-        {
-            "id": 3,
-            "name": "Cama 2 Plazas Minimalista",
-            "category": "Camas",
-            "dims": "140x190 cm",
-            "desc": "Estructura sólida de pino seleccionado.",
-            "img": "https://images.unsplash.com/photo-1505693416388-b0346ef414b9?q=80&w=800&auto=format&fit=crop",
+            "img": "https://raw.githubusercontent.com/ElNoNo26/El-NoNo/refs/heads/main/Muebles/Organizador%202.webp",
+            "desc": "Organiza tu hogar con esta estantería de madera natural. Su diseño rústico de cuatro niveles ofrece calidez y funcionalidad, siendo la pieza ideal para libros o decoración esencial.",
             "featured": true
         },
         {
@@ -235,15 +226,6 @@
             "dims": "160x80x75 cm",
             "desc": "Mesa robusta para 6 personas. Pino macizo.",
             "img": "https://images.unsplash.com/photo-1617806118233-18e1de247200?q=80&w=800&auto=format&fit=crop",
-            "featured": false
-        },
-        {
-            "id": 6,
-            "name": "Silla Eames Replica",
-            "category": "Sillas",
-            "dims": "Standard",
-            "desc": "Diseño clásico con patas de madera.",
-            "img": "https://images.unsplash.com/photo-1562113530-891c211755e4?q=80&w=800&auto=format&fit=crop",
             "featured": false
         },
         {
@@ -301,24 +283,6 @@
             "featured": false
         },
         {
-            "id": 13,
-            "name": "Estantería Industrial",
-            "category": "Organizadores",
-            "dims": "100x200x30 cm",
-            "desc": "Hierro y madera. Estilo loft.",
-            "img": "https://images.unsplash.com/photo-1597072689227-8882273e8f6d?q=80&w=800&auto=format&fit=crop",
-            "featured": true
-        },
-        {
-            "id": 14,
-            "name": "Mesa TV Rack",
-            "category": "Mesas",
-            "dims": "140x50x40 cm",
-            "desc": "Espacio para consola y deco.",
-            "img": "https://images.unsplash.com/photo-1593791767759-42b7816d7497?q=80&w=800&auto=format&fit=crop",
-            "featured": false
-        },
-        {
             "id": 15,
             "name": "Baúl Juguetero",
             "category": "Organizadores",
@@ -343,15 +307,6 @@
             "dims": "200x120 cm",
             "desc": "Madera maciza lustrada.",
             "img": "https://images.unsplash.com/photo-1505693314120-0d443867891c?q=80&w=800&auto=format&fit=crop",
-            "featured": false
-        },
-        {
-            "id": 18,
-            "name": "Cajonera Móvil",
-            "category": "Organizadores",
-            "dims": "40x60x50 cm",
-            "desc": "3 cajones. Ideal bajo escritorio.",
-            "img": "https://images.unsplash.com/photo-1519947486511-461309e31c84?q=80&w=800&auto=format&fit=crop",
             "featured": false
         },
         {
@@ -514,7 +469,7 @@
         };
         renderSocials('footer-socials');
 
-        // --- DARK MODE LOGIC ---
+        // --- DARK MODE LOGIC (AUTO-DETECT + DEFAULT DARK) ---
         const themeBtn = document.getElementById('theme-btn');
         const iconSun = document.getElementById('icon-sun');
         const iconMoon = document.getElementById('icon-moon');
@@ -536,9 +491,14 @@
             }
         }
 
-        if(localStorage.getItem('theme') === 'dark') {
+        // Init: Default to DARK if no preference saved
+        const savedTheme = localStorage.getItem('theme');
+        if(savedTheme === 'dark' || !savedTheme) { // Si es 'dark' O si no hay nada guardado (primera vez)
             document.body.classList.add('dark-mode');
             updateThemeIcons(true);
+        } else {
+            document.body.classList.remove('dark-mode');
+            updateThemeIcons(false);
         }
         themeBtn.onclick = toggleTheme;
 
@@ -655,37 +615,23 @@
 
         function initCarousel(container) {
             let interval;
-            
+            let isPaused = false;
             const start = () => {
-                clearInterval(interval); // Limpiar por si acaso
                 interval = setInterval(() => {
-                    const cardWidth = 280; // Ancho aprox de tarjeta + gap
-                    // Si llegó al final, volver al inicio
-                    if (container.scrollLeft + container.clientWidth >= container.scrollWidth - 10) {
-                        container.scrollTo({ left: 0, behavior: 'smooth' });
-                    } else {
-                        container.scrollBy({ left: cardWidth, behavior: 'smooth' });
+                    if(!isPaused) {
+                        if (container.scrollLeft >= (container.scrollWidth - container.clientWidth) - 5) {
+                            container.scrollTo({ left: 0, behavior: 'smooth' });
+                        } else {
+                            container.scrollBy({ left: 280, behavior: 'smooth' });
+                        }
                     }
-                }, 4000); // 4 segundos
+                }, 4000);
             };
-
-            const stop = () => clearInterval(interval);
-
-            // Iniciar movimiento
             start();
-
-            // Detener al tocar
-            container.addEventListener('touchstart', stop, {passive: true});
-            
-            // Reiniciar al soltar (con espera para no molestar)
-            container.addEventListener('touchend', () => {
-                stop();
-                setTimeout(start, 4000); 
-            }, {passive: true});
-
-            // Detener con mouse
-            container.addEventListener('mouseenter', stop);
-            container.addEventListener('mouseleave', start);
+            container.addEventListener('touchstart', () => isPaused = true, {passive: true});
+            container.addEventListener('touchend', () => setTimeout(() => isPaused = false, 3000));
+            container.addEventListener('mouseenter', () => isPaused = true);
+            container.addEventListener('mouseleave', () => isPaused = false);
         }
 
         // --- MODAL & NAME PROMPT LOGIC ---
